@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --mint-1: #eefcf4;
+  --mint-2: #d7f8e7;
+  --mint-3: #9fe7c6;
+  --mint-4: #39c78b;
+  --mint-5: #148a61;
+  --sun: #f6ffe3;
+  --ink: #0c241a;
+  --ink-soft: #315446;
+  --surface: #ffffff;
+  --surface-muted: rgba(255, 255, 255, 0.72);
+  --ring: rgba(20, 138, 97, 0.18);
+}
+
+@theme inline {
+  --color-background: var(--mint-1);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-sora);
+  --font-display: var(--font-fraunces);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 18%, #ffffff 0%, rgba(255, 255, 255, 0.6) 25%, transparent 52%),
+    radial-gradient(circle at 84% 12%, rgba(159, 231, 198, 0.7) 0%, transparent 45%),
+    linear-gradient(140deg, #f6fff1 0%, #effff7 45%, #e7fbf1 100%);
+  color: var(--ink);
+  font-family: var(--font-sans), sans-serif;
+}
+
+::selection {
+  background: rgba(57, 199, 139, 0.25);
+}
+
+.page-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.page-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(20, 138, 97, 0.16) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+  letter-spacing: -0.01em;
+}
+
+.glass-card {
+  background: var(--surface-muted);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 20px 45px rgba(10, 48, 32, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+}
+
+.soft-shadow {
+  box-shadow:
+    0 16px 40px rgba(12, 36, 26, 0.12),
+    0 2px 8px rgba(12, 36, 26, 0.08);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: reveal 0.7s ease forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.float-slower {
+  animation: float 12s ease-in-out infinite;
+}
+
+.btn-flash {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  overflow: hidden;
+}
+
+.btn-flash::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  opacity: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  transition: opacity 250ms ease;
+}
+
+.btn-flash:hover::after {
+  opacity: 0.35;
+}
+
+.btn-flash:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-flash.flash {
+  animation: button-flash 0.35s ease;
+  pointer-events: none;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes button-flash {
+  0% {
+    box-shadow: 0 0 0 rgba(57, 199, 139, 0);
+    filter: brightness(1);
+  }
+  45% {
+    box-shadow: 0 0 18px rgba(57, 199, 139, 0.5);
+    filter: brightness(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(57, 199, 139, 0);
+    filter: brightness(1);
+  }
+}
