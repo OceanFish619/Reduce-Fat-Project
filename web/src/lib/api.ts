@@ -35,8 +35,12 @@ const apiRequest = async <T>(
   return response.json();
 };
 
-const authHeaders = (token?: string) =>
-  token ? { Authorization: `Bearer ${token}` } : {};
+const authHeaders = (token?: string): HeadersInit | undefined => {
+  if (!token) {
+    return undefined;
+  }
+  return { Authorization: `Bearer ${token}` };
+};
 
 export const apiGet = async <T>(
   path: string,
