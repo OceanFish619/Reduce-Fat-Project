@@ -5,7 +5,8 @@ const API_BASE =
 type QueryParams = Record<string, string | number | undefined>;
 
 const buildUrl = (path: string, params?: QueryParams) => {
-  const url = new URL(path, API_BASE);
+  const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+  const url = new URL(normalizedPath, `${API_BASE}/`);
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== "") {

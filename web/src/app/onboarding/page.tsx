@@ -42,6 +42,12 @@ export default function OnboardingPage() {
       return;
     }
     setLoading(true);
+    const redirectBase =
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      (typeof window !== "undefined" ? window.location.origin : "");
+    const emailRedirectTo = redirectBase
+      ? `${redirectBase.replace(/\/$/, "")}/onboarding`
+      : undefined;
     try {
       if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
@@ -57,6 +63,7 @@ export default function OnboardingPage() {
               goal_weight: form.goalWeight,
               plan_duration: form.planDuration,
             },
+            emailRedirectTo,
           },
         });
         if (error) {
